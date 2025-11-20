@@ -1,0 +1,16 @@
+# Directorios de compilación de Gradle
+.gradle/
+build/
+
+# Archivos temporales y de compilación de Eclipse
+bin/
+.settings/
+.classpath
+.project
+
+# Archivos compilados de Java (por seguridad)
+*.class
+
+# Archivos del sistema operativo (opcional pero recomendado)
+.DS_Store
+Thumbs.db

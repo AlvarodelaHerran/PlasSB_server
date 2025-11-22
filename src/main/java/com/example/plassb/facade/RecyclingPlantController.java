@@ -32,12 +32,11 @@ public class RecyclingPlantController {
         return RecyclingPlantDto.map(res);
     }
     
-    @GetMapping("/capacity/{date}")
+    @GetMapping("/capacity")
     public ResponseEntity<Integer> getPlantCapacity(@Parameter(
             description = "Date pour laquelle récupérer les données d'utilisation",
-            example = "2025-11-22"
-        )
-        @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+            example = "2025-11-22")
+	        @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         Integer remaining = recyclingPlantService.getRemainingCapacity(date);
         return remaining != null ? ResponseEntity.ok(remaining) : ResponseEntity.notFound().build();
     }
@@ -50,7 +49,7 @@ public class RecyclingPlantController {
                 LocalDate.now(),
                 request.getFilling()
         );
-        return ResponseEntity.ok(AssignResponseDto.map(result.getPlant().getId(), 
+        return ResponseEntity.ok(AssignResponseDto.map(
         		result.getDumpsterId(), 
         		result.getEmployeeId(), 
         		result.getDate()));

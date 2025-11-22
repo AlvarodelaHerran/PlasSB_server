@@ -4,18 +4,9 @@
 	import java.util.List;
 	
 	public class AssignResponseDto {
-	    private Long plantId;
 	    private Long dumpsterId;
 	    private Long employeeId;
 	    private LocalDate date;
-	
-	    public Long getPlantId() {
-	        return plantId;
-	    }
-	
-	    public void setPlantId(Long plantId) {
-	        this.plantId = plantId;
-	    }
 	
 	    public Long getDumpsterId() {
 	        return dumpsterId;
@@ -42,9 +33,8 @@
 	    }
 	
 	
-	    public static AssignResponseDto map(Long plantId, Long dumpsterId, Long employeeId, LocalDate date) {
+	    public static AssignResponseDto map(Long dumpsterId, Long employeeId, LocalDate date) {
 	        AssignResponseDto response = new AssignResponseDto();
-	        response.setPlantId(plantId);
 	        response.setDumpsterId(dumpsterId);
 	        response.setEmployeeId(employeeId);
 	        response.setDate(date);

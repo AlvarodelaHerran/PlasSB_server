@@ -2,26 +2,11 @@ package com.example.plassb.dto;
 
 public class AssignRequestDto {
 
-    private Long plantId;
     private Long dumpsterId;
     private Long employeeId;
     private int filling;
 
     public AssignRequestDto() {}
-
-    public AssignRequestDto(Long dumpsterId, Long employeeId, int filling) {
-        this.dumpsterId = dumpsterId;
-        this.employeeId = employeeId;
-        this.filling = filling;
-    }
-
-    public Long getPlantId() {
-        return plantId;
-    }
-
-    public void setPlantId(Long plantId) {
-        this.plantId = plantId;
-    }
 
     public Long getDumpsterId() {
         return dumpsterId;

@@ -40,6 +40,7 @@ public class RecyclingPlant {
     public void setLocation(String location) { this.location = location; }
     public int getMaxCapacity() { return maxCapacity; }
     public void setMaxCapacity(int maxCapacity) { this.maxCapacity = maxCapacity; }
+    public void setCurrentFill(int currentFill) { this.currentFill = currentFill; }
     public int getCurrentFill() { return currentFill; }
     public List<AssignmentRecord> getAssignments() { return assignments; }
 

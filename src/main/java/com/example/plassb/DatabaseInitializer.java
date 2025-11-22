@@ -29,7 +29,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         r1.setId(1L);
         recyclingPlantRepository.save(r1);
 
-        AssignmentRecord a1 = new AssignmentRecord(1L, r1, 101L, LocalDate.now(), 100);
+        AssignmentRecord a1 = new AssignmentRecord(1L, r1, 101L, LocalDate.now().minusDays(3), 100);
         AssignmentRecord a2 = new AssignmentRecord(2L, r1, 102L, LocalDate.now(), 200);
 
         r1.addAssignment(a1);

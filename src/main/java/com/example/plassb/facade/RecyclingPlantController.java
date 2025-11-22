@@ -1,5 +1,6 @@
 package com.example.plassb.facade;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
@@ -8,12 +9,15 @@ import java.util.Optional;
 
 import com.example.plassb.dto.AssignRequestDto;
 import com.example.plassb.dto.AssignResponseDto;
+import com.example.plassb.dto.RecyclingPlantDto;
 import com.example.plassb.entity.AssignmentRecord;
 import com.example.plassb.entity.RecyclingPlant;
 import com.example.plassb.service.RecyclingPlantService;
 
+import io.swagger.v3.oas.annotations.Parameter;
+
 @RestController
-@RequestMapping("/recyclingPlants")
+@RequestMapping("/recyclingPlant")
 public class RecyclingPlantController {
 
     private final RecyclingPlantService recyclingPlantService;
@@ -23,12 +27,17 @@ public class RecyclingPlantController {
     }
 
     @GetMapping
-    public Optional<RecyclingPlant> getPlant() {
-        return recyclingPlantService.getPlant();
+    public RecyclingPlantDto getPlant() {
+    	RecyclingPlant res = recyclingPlantService.getPlant();
+        return RecyclingPlantDto.map(res);
     }
     
-    @GetMapping("/{plantId}/capacity")
-    public ResponseEntity<Integer> getPlantCapacity(@RequestParam LocalDate date) {
+    @GetMapping("/capacity/{date}")
+    public ResponseEntity<Integer> getPlantCapacity(@Parameter(
+            description = "Date pour laquelle récupérer les données d'utilisation",
+            example = "2025-11-22"
+        )
+        @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         Integer remaining = recyclingPlantService.getRemainingCapacity(date);
         return remaining != null ? ResponseEntity.ok(remaining) : ResponseEntity.notFound().build();
     }

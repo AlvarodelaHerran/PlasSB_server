@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RecyclingPlantService {
@@ -22,8 +23,23 @@ public class RecyclingPlantService {
         this.assignmentRepository = assignmentRepository;
     }
 
-    public Optional<RecyclingPlant> getPlant() {
-        return plantRepository.findById(1L);
+    public RecyclingPlant getPlant() {
+        RecyclingPlant plant = plantRepository.findById(1L)
+                .orElseThrow(() -> new RuntimeException("Plant not found"));
+
+        List<AssignmentRecord> filteredAssignments = plant.getAssignments()
+                .stream()
+                .filter(a -> a.getDate().equals(LocalDate.now()))
+                .collect(Collectors.toList());
+        
+        plant.getAssignments().clear();
+        plant.getAssignments().addAll(filteredAssignments);
+        plant.setCurrentFill(filteredAssignments
+        		.stream()
+        		.mapToInt(AssignmentRecord::getFilling)
+                .sum());
+
+        return plant;
     }
 
     public AssignmentRecord assignDumpsterToPlant(Long dumpsterId, Long employeeId, LocalDate date, int filling) {

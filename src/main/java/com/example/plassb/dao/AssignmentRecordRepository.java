@@ -7,6 +7,6 @@ import com.example.plassb.entity.AssignmentRecord;
 import com.example.plassb.entity.AssignmentRecordId;
 
 public interface AssignmentRecordRepository extends JpaRepository<AssignmentRecord, AssignmentRecordId> {
-    List<AssignmentRecord> findByPlantId(Long plantId);
+    List<AssignmentRecord> findByPlantName(String plantName);
     List<AssignmentRecord> findByDate(LocalDate date);
 }

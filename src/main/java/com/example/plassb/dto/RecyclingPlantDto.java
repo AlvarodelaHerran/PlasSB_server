@@ -4,7 +4,6 @@ import com.example.plassb.entity.RecyclingPlant;
 
 public class RecyclingPlantDto {
 
-    private Long id;
     private String name;
     private String location;
     private int postalCode;
@@ -13,8 +12,7 @@ public class RecyclingPlantDto {
 
     public RecyclingPlantDto() {}
 
-    public RecyclingPlantDto(Long id, String name, String location, int postalCode, int maxCapacity, int currentFill) {
-        this.id = id;
+    public RecyclingPlantDto(String name, String location, int postalCode, int maxCapacity, int currentFill) {
         this.name = name;
         this.location = location;
         this.postalCode = postalCode;
@@ -22,9 +20,6 @@ public class RecyclingPlantDto {
         this.currentFill = currentFill;
         this.currentFill = currentFill;
     }
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -43,7 +38,6 @@ public class RecyclingPlantDto {
 
     public static RecyclingPlantDto map(RecyclingPlant plant) {
         return new RecyclingPlantDto(
-            plant.getId(),
             plant.getName(),
             plant.getLocation(),
             plant.getPostalCode(),

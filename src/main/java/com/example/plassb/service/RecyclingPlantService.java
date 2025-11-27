@@ -24,7 +24,7 @@ public class RecyclingPlantService {
     }
 
     public RecyclingPlant getPlant() {
-        RecyclingPlant plant = plantRepository.findById(1L)
+        RecyclingPlant plant = plantRepository.findById("PlasSB")
                 .orElseThrow(() -> new RuntimeException("Plant not found"));
 
         List<AssignmentRecord> filteredAssignments = plant.getAssignments()
@@ -43,7 +43,7 @@ public class RecyclingPlantService {
     }
 
     public AssignmentRecord assignDumpsterToPlant(Long dumpsterId, Long employeeId, LocalDate date, int filling) {
-        RecyclingPlant plant = plantRepository.findById(1L)
+        RecyclingPlant plant = plantRepository.findById("PlasSB")
                 .orElseThrow(() -> new IllegalArgumentException("Plant not found"));
 
         AssignmentRecord record = new AssignmentRecord(dumpsterId, plant, employeeId, date, filling);
@@ -54,10 +54,10 @@ public class RecyclingPlantService {
     }
 
     public Integer getRemainingCapacity(LocalDate date) {
-        RecyclingPlant plant = plantRepository.findById(1L).orElse(null);
+        RecyclingPlant plant = plantRepository.findById("PlasSB").orElse(null);
         if (plant == null) return null;
 
-        int usedCapacity = assignmentRepository.findByPlantId(1L)
+        int usedCapacity = assignmentRepository.findByPlantName("PlasSB")
                 .stream()
                 .filter(a -> a.getDate().equals(date))
                 .mapToInt(AssignmentRecord::getFilling)

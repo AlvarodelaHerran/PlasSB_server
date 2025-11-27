@@ -9,10 +9,12 @@ public class AssignmentRecord {
 
     @Id
     private Long dumpsterId;
-
     @Id
+    @Column(name = "plant_name")
+    private String plantName;
+    
     @ManyToOne
-    @JoinColumn(name = "plant_id")
+    @JoinColumn(name = "plant_name", referencedColumnName = "name", insertable = false, updatable = false)
     private RecyclingPlant plant;
     
     private Long employeeId;
@@ -22,6 +24,7 @@ public class AssignmentRecord {
     public AssignmentRecord() {}
 
     public AssignmentRecord(Long dumpsterId, RecyclingPlant plant, Long employeeId, LocalDate date, int filling) {
+    	this.plantName = plant.getName();
         this.dumpsterId = dumpsterId;
         this.plant = plant;
         this.employeeId = employeeId;

@@ -25,8 +25,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        RecyclingPlant r1 = new RecyclingPlant("PlasSB Ltd.", "Bilbao", 48010, 5000);
-        r1.setId(1L);
+        RecyclingPlant r1 = new RecyclingPlant("PlasSB", "Bilbao", 48010, 5000);
         recyclingPlantRepository.save(r1);
 
         AssignmentRecord a1 = new AssignmentRecord(1L, r1, 101L, LocalDate.now().minusDays(3), 100);

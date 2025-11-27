@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public class AssignmentRecordId implements Serializable {
     private Long dumpsterId;
-    private Long plant;
+    private String plantName;
 
     public AssignmentRecordId() {}
-    public AssignmentRecordId(Long dumpsterId, Long plant) {
+    public AssignmentRecordId(Long dumpsterId, String plantName) {
         this.dumpsterId = dumpsterId;
-        this.plant = plant;
+        this.plantName = plantName;
     }
 
     @Override
@@ -19,11 +19,11 @@ public class AssignmentRecordId implements Serializable {
         if(!(o instanceof AssignmentRecordId)) return false;
         AssignmentRecordId that = (AssignmentRecordId) o;
         return Objects.equals(dumpsterId, that.dumpsterId) &&
-               Objects.equals(plant, that.plant);
+               Objects.equals(plantName, that.plantName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dumpsterId, plant);
+        return Objects.hash(dumpsterId, plantName);
     }
 }

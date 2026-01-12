@@ -2,13 +2,13 @@ package com.example.plassb.facade;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import com.example.plassb.dto.AssignRequestDto;
-import com.example.plassb.dto.AssignResponseDto;
 import com.example.plassb.dto.RecyclingPlantDto;
 import com.example.plassb.entity.AssignmentRecord;
 import com.example.plassb.entity.RecyclingPlant;
@@ -42,16 +42,17 @@ public class RecyclingPlantController {
     }
 
     @PostMapping("/assignDumpster")
-    public ResponseEntity<AssignResponseDto> assignDumpster(@RequestBody AssignRequestDto request) {
-        AssignmentRecord result = recyclingPlantService.assignDumpsterToPlant(
-                request.getDumpsterId(),
-                request.getEmployeeId(),
-                LocalDate.now(),
-                request.getFilling()
-        );
-        return ResponseEntity.ok(AssignResponseDto.map(
-        		result.getDumpsterId(), 
-        		result.getEmployeeId(), 
-        		result.getDate()));
+    public ResponseEntity<?> assignDumpster(@RequestBody AssignRequestDto request) {
+        try {
+            recyclingPlantService.assignDumpsterToPlant(
+                    request.getFilling(),
+                    request.getTotalDumpsters()
+            );
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erreur serveur : " + e.getMessage());
+        }
     }
 }

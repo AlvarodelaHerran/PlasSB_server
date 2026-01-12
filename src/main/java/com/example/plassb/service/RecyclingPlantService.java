@@ -42,11 +42,11 @@ public class RecyclingPlantService {
         return plant;
     }
 
-    public AssignmentRecord assignDumpsterToPlant(Long dumpsterId, Long employeeId, LocalDate date, int filling) {
+    public AssignmentRecord assignDumpsterToPlant(int filling, int totalDumpster) {
         RecyclingPlant plant = plantRepository.findById("PlasSB")
                 .orElseThrow(() -> new IllegalArgumentException("Plant not found"));
 
-        AssignmentRecord record = new AssignmentRecord(dumpsterId, plant, employeeId, date, filling);
+        AssignmentRecord record = new AssignmentRecord(plant, LocalDate.now(), filling, totalDumpster);
         plant.addAssignment(record);
 
         plantRepository.save(plant);
@@ -54,15 +54,12 @@ public class RecyclingPlantService {
     }
 
     public Integer getRemainingCapacity(LocalDate date) {
-        RecyclingPlant plant = plantRepository.findById("PlasSB").orElse(null);
-        if (plant == null) return null;
 
-        int usedCapacity = assignmentRepository.findByPlantName("PlasSB")
+        int usedCapacity = assignmentRepository.findByDate(date)
                 .stream()
-                .filter(a -> a.getDate().equals(date))
                 .mapToInt(AssignmentRecord::getFilling)
                 .sum();
 
-        return plant.getMaxCapacity() - usedCapacity;
+        return plantRepository.findById("PlasSB").orElse(null).getMaxCapacity() - usedCapacity;
     }
 }
